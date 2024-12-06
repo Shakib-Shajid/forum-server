@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const jwt = require('jsonwebtoken');
 const app = express();
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const port = process.env.PORT || 5000;
@@ -31,6 +32,7 @@ async function run() {
     // const userCollection = client.db('forumDB').collection('users');
     const postsCollection = client.db('forumDB').collection('posts');
     const commentCollection = client.db('forumDB').collection('comments');
+    const messageCollection = client.db('forumDB').collection('message');
 
 
     // ........................CRUD start..............................
@@ -81,44 +83,38 @@ async function run() {
     })
 
     // ........................CRUD end..............................
+    
+    
+    
+    // ........................comments start..............................
 
-
-    // comments start
-     // insert comment
-     app.post('/comment', async (req, res) => {
+    // insert comment
+    app.post('/comment', async (req, res) => {
       const comment = req.body;
       console.log(comment);
       const result = await commentCollection.insertOne(comment);
       res.send(result);
     })
 
-     // get all comments
-     app.get('/comment', async (req, res) => {
+    // get all comments
+    app.get('/comment', async (req, res) => {
       const cursor = commentCollection.find();
       const result = await cursor.toArray();
       res.send(result);
     })
-    
 
-     // update
-     app.get('/comment/:id', async (req, res) => {
+
+    // update
+    app.get('/comment/:id', async (req, res) => {
       const id = req.params.id;
       const query = { _id: new ObjectId(id) }
       const result = await commentCollection.findOne(query);
       res.send(result);
     })
 
-    // ...........................................................................
+     // ........................comments end..............................
 
-
-
-
-
-
-
-
-
-
+    
 
 
     // Send a ping to confirm a successful connection
@@ -138,3 +134,6 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Forum server is running on port ${port}`)
 })
+
+
+
