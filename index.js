@@ -32,7 +32,6 @@ async function run() {
     // const userCollection = client.db('forumDB').collection('users');
     const postsCollection = client.db('forumDB').collection('posts');
     const commentCollection = client.db('forumDB').collection('comments');
-    const messageCollection = client.db('forumDB').collection('message');
 
 
     // ........................CRUD start..............................
@@ -114,7 +113,9 @@ async function run() {
 
      // ........................comments end..............................
 
-    
+
+
+
 
 
     // Send a ping to confirm a successful connection
@@ -134,6 +135,3 @@ app.get('/', (req, res) => {
 app.listen(port, () => {
   console.log(`Forum server is running on port ${port}`)
 })
-
-
-
